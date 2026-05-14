@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farhan Portfolio</title>
+
+<link rel="stylesheet" href="styl.css">
+
+<!-- AOS -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="cursor"></div>
+
+<header>
+  <h2>MY Portfolio</h2>
+
+<nav class="nav">
+  <a href="#">Home</a>
+  <a href="#about">About</a>
+  <a href="#projects">Projects</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="login.html">Login</a>
+</nav>
+
+   <div class="right-side">
+    <a href="login.html" class="login-btn">Login</a>
+    <div class="toggle" onclick="toggleMode()">🌙</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-left" data-aos="fade-right">
+    <h1>Hi, I'm Farhan</h1>
+    <h2 class="typing"></h2>
+    <button class="btn">Hire Me</button>
+  </div>
+
+  <div class="hero-right" data-aos="fade-left"></div>
+</section>
+
+<section class="section" id="about" data-aos="fade-up">
+  <h2>About Me</h2>
+  <p>I build smart, modern and beautiful applications.</p>
+</section>
+
+
+
+<section id="projects">
+  <h2>My Projects</h2>
+
+  <div class="filters">
+    <button onclick="filterProjects('all')">All</button>
+    <button onclick="filterProjects('web')">Web</button>
+    <button onclick="filterProjects('app')">App</button>
+    <button onclick="filterProjects('design')">Design</button>
+  </div>
+
+  <div class="projects" id="projects-list"></div>
+</section>
+
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+AOS.init({
+  duration: 1000,
+  once: true
+});
+
+// PROJECT DATA
+
+let projects = [
+
+{
+  title: "Modern Calculator",
+  category: "web",
+  code: `<a href="calcu.html" class="login-btn">lets start the calculation</a  `
+
+},
+
+{
+  title: "Button Design",
+  category: "design",
+  code: `<button style="background:blue;color:white;">Click Me</button>`
+}
+
+];
+
+const container = document.getElementById("projects-list");
+
+// SHOW PROJECTS
+function showProjects(list = projects){
+
+  container.innerHTML = "";
+
+  list.forEach(project => {
+
+    const div = document.createElement("div");
+    div.classList.add("project-card");
+
+    const animations = [
+      "fade-up",
+      "fade-right",
+      "fade-left",
+      "zoom-in",
+      "flip-left"
+    ];
+
+    div.setAttribute(
+      "data-aos",
+      animations[Math.floor(Math.random() * animations.length)]
+    );
+
+    div.innerHTML = `
+      <h3>${project.title}</h3>
+      <pre><code>${project.code}</code></pre>
+      <button onclick="runCode(\`${encodeURIComponent(project.code)}\`)">
+        ▶ Run
+      </button>
+    `;
+
+    container.appendChild(div);
+  });
+
+  AOS.refresh();
+}
+
+// FILTER
+function filterProjects(category){
+  if(category === "all"){
+    showProjects();
+  } else {
+    showProjects(projects.filter(p => p.category === category));
+  }
+}
+
+// RUN CODE
+function runCode(code){
+
+  const newWindow = window.open("");
+
+  const decoded = decodeURIComponent(code);
+
+  newWindow.document.open();
+  newWindow.document.write(decoded);
+  newWindow.document.close();
+}
+// INIT
+showProjects();
+
+</script>
+
+
+</section>
+
+<footer class="footer">
+  <p>© 2026 Farhan</p>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
